@@ -1,18 +1,18 @@
-# ISAutoStart
+# ISSecurityFeed
 
-Occasionally as a streaming engineer you often need to have a Live stream running to test on. Especially if you're working on a player. Here's a useful library to get one going in Wowza with the need of an encoder or webcam. By default the program runs on the application name ```autostart```. You can change that via the properites explained below. You can learn more about how it works [here](http://www.indiestre.am/index.php/2017/02/16/auto-starting-an-application-using-wowza/).
+Occasionally as a streaming engineer you often need to have a Live stream running to test on. Especially if you're working on a player. Here's a useful library to get one going in Wowza with the need of an encoder or webcam. By default the program runs on the application name ```securityfeed```. You can change that via the properites explained below. You can learn more about how it works [here](http://www.indiestre.am/index.php/2017/02/16/auto-starting-an-application-using-wowza/).
 
 ---
 
 ## Setup
 
-1.) Copy ISAutoStart.jar to your Wowza ```lib/``` folder.
+1.) Copy ISSecurityFeed.jar to your Wowza ```lib/``` folder.
 
 2.) Edit the Wowza configuration file located at ```conf/Server.xml``` Scroll down to the bottom and add the following in the ```<ServerListeners>``` node.
 
 ```
 <ServerListener>
-  <BaseClass>com.indiestream.ISAutoStart</BaseClass>
+  <BaseClass>com.indiestream.issecurityfeed.ISSecurityFeedServer</BaseClass>
 </ServerListener>
 ```
 
@@ -20,13 +20,13 @@ Occasionally as a streaming engineer you often need to have a Live stream runnin
 
 ```
 <Property>
-  <Name>autoStartVHostName</Name>
+  <Name>securityFeedVHostName</Name>
   <Value>_defaultVHost_</Value>
   <Type>String</Type>
 </Property>
 <Property>
-  <Name>autoStartApplicationName</Name>
-  <Value>autostart</Value>
+  <Name>securityFeedApplicationName</Name>
+  <Value>securityfeed</Value>
   <Type>String</Type>
 </Property>
 ```
@@ -36,38 +36,32 @@ Where:
 * **autoStartApplicationName** - The name of application that will be started on boot.
 
 
-4.) Now create the application by adding the ```autostart``` folder in both the ```applications``` and ```conf```. Copy the application configuration file ```Application.xml``` from the ```live``` application into the new folder.
+4.) Now create the application by adding the ```securityfeed``` folder in both the ```applications``` and ```conf```. Copy the application configuration file ```Application.xml``` from the ```live``` application into the new folder.
 
-5.) Edit the newly created ```Application.xml``` file located in ```conf/autostart/Application.xml```. Scroll down to the bottom and add the following properties in the ```<Properties>``` node. You can update the default values to your own.
+5.) Edit the newly created ```Application.xml``` file located in ```conf/securityfeed/Application.xml```. Scroll down to the bottom and add the following properties in the ```<Properties>``` node. You can update the default values to your own.
 
 ```
 <Property>
-  <Name>autoStartFileName</Name>
+  <Name>securityFeedNoSignalFileName</Name>
   <Value>mp4:sample.mp4</Value>
   <Type>String</Type>
 </Property>
 <Property>
-  <Name>autoStartStartTime</Name>
-  <Value>0</Value>
+  <Name>securityFeedRotationDelay</Name>
+  <Value>15</Value>
   <Type>Integer</Type>
 </Property>
 <Property>
-  <Name>autoStartDuration</Name>
-  <Value>10</Value>
-  <Type>Integer</Type>
-</Property>
-<Property>
-  <Name>autoStartStreamName</Name>
+  <Name>securityFeedStreamName</Name>
   <Value>feed</Value>
   <Type>String</Type>
 </Property>
 ```
 
 Where:
-* **autoStartFileName** - The name of the file to play in the content folder.
-* **autoStartStartTime** - The start time of the movie.
-* **autoStartDuration** - The duration of playback time of the movie.
-* **autoStartStreamName** - The name of the Live output stream.
+* **securityFeedNoSignalFileName** - The name of the file to play when there are no cameras publishing.
+* **securityFeedRotationDelay** - The delay between camera feeds.
+* **securityFeedStreamName** - The name of the Live stream.
 
 
 ---
